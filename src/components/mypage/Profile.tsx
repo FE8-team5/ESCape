@@ -5,7 +5,7 @@ import PrimaryButton from "../@shared/button/PrimaryButton";
 import TertiaryButton from "../@shared/button/TertiaryButton";
 
 export default function Profile() {
-  // TertiaryButton의 임시 onClick 함수
+  // TertiaryButton을 위한 임시 onClick 함수
   const temp = () => {
     return;
   };
@@ -27,6 +27,7 @@ export default function Profile() {
           User description
         </p>
       </div>
+
       <div className="w-full flex content-between items-center">
         <div className="w-full flex flex-col gap-[10px] content-center items-center border-r border-r-unactive">
           <h4 className="text-center text-brand-white text-lg font-semibold">
@@ -45,6 +46,7 @@ export default function Profile() {
           </p>
         </div>
       </div>
+
       <div className="w-full flex flex-col gap-[10px]">
         <PrimaryButton active={true}>프로필 편집</PrimaryButton>
         <TertiaryButton active={true} onClick={temp}>

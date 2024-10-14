@@ -1,0 +1,46 @@
+import React from "react";
+import ActivityDetail from "@/components/mypage/ActivityDetail";
+import starIcon from "@/assets/icon/star_icon.svg";
+import commentIcon from "@/assets/icon/comment_icon.svg";
+
+/** @todo SSR? */
+const activityDetailContents = [
+  {
+    title: "남긴 별점 평균",
+    icon: starIcon,
+    value: "4.1",
+    isCategory: false,
+  },
+  {
+    title: "남긴 리뷰",
+    icon: commentIcon,
+    value: "125",
+    isCategory: false,
+  },
+  {
+    title: "관심 카테고리",
+    icon: "",
+    value: "의류/악세서리",
+    isCategory: true,
+  },
+];
+
+export default function Activity() {
+  return (
+    <div className="mb-[60px] w-full">
+      <h3 className="mb-[30px] text-brand-white text-lg font-semibold">
+        활동 내역
+      </h3>
+      <div className="grid grid-cols-3 gap-[10px]">
+        {activityDetailContents.map((activityDetailContent) => (
+          <ActivityDetail
+            title={activityDetailContent.title}
+            icon={activityDetailContent.icon}
+            value={activityDetailContent.value}
+            isCategory={activityDetailContent.isCategory}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}

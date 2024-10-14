@@ -1,8 +1,12 @@
+import Profile from "@/components/mypage/Profile";
+import Activity from "@/components/mypage/Activity";
+
 export default function MyPage() {
   return (
     <>
       <div>
-        내 프로필 페이지
+        <Profile />
+        <Activity />
       </div>
     </>
   );
