@@ -27,23 +27,10 @@ export interface RankingTypes extends CommonUserTypes {
   followersCount: number;
 }
 
-export interface ProductTypes {
-  updatedAt: string;
-  createdAt: string;
-  writerId: number;
-  categoryId: number;
-  favoriteCount: number;
-  reviewCount: number;
-  rating: number;
-  image: string;
-  name: string;
-  id: number;
-}
-
-export interface ProductListTypes {
-  nextCursor: number;
-  list: ProductTypes[];
-}
+/**
+ * created-products, reviewed-products, favorite-products 타입은
+ * ProductDto.ts 파일에 있는 ProductTypes, ProductListTypes와 같음
+ */
 
 export interface FolloweeTypes extends CommonUserTypes {}
 
