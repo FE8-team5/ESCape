@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import profileImage from "@/assets/image/profile_image.png";
+import profileImage from "../../../public/images/profile_image.png";
 import PrimaryButton from "../@shared/button/PrimaryButton";
 import TertiaryButton from "../@shared/button/TertiaryButton";
 
