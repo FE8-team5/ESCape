@@ -11,7 +11,7 @@ export default function Profile() {
   };
 
   return (
-    <div className="flex flex-col content-center items-center gap-[30px] w-full px-5 py-[30px] border-unactive rounded-xl bg-[#252530]">
+    <div className="flex flex-col content-center items-center gap-[30px] w-full px-5 py-[30px] border-unactive rounded-xl bg-[#252530] xl:w-[340px]">
       <Image
         className="rounded-full"
         src={profileImage}

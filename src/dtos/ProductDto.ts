@@ -5,7 +5,7 @@ export interface ProductTypes {
   categoryId: number;
   favoriteCount: number;
   reviewCount: number;
-  rating: number;
+  rating: string;
   image: string;
   name: string;
   id: number;
@@ -22,7 +22,7 @@ export interface CategoryTypes {
 }
 
 export interface CategoryMetricTypes {
-  rating: number;
+  rating: string;
   favoriteCount: number;
   reviewCount: number;
 }
@@ -32,7 +32,7 @@ export interface ProductDetailTypes {
   name: string;
   description: string;
   image: string;
-  rating: number;
+  rating: string;
   reviewCount: number;
   favoriteCount: number;
   categoryId: number;
@@ -65,7 +65,7 @@ export interface ProductReviewListTypes {
   isLiked: true;
   likeCount: number;
   content: string;
-  rating: number;
+  rating: string;
   id: number;
 }
 
