@@ -18,20 +18,20 @@ const activityDetailContents = [
     isCategory: false,
   },
   {
-    title: "관심 카테고리",
+    title: "관심 지역",
     icon: "",
-    value: "의류/악세서리",
+    value: "강남",
     isCategory: true,
   },
 ];
 
 export default function Activity() {
   return (
-    <div className="mb-[60px] w-full">
+    <div className="w-full">
       <h3 className="mb-[30px] text-brand-white text-lg font-semibold">
         활동 내역
       </h3>
-      <div className="grid grid-cols-3 gap-[10px]">
+      <div className="grid grid-cols-3 gap-[10px] xl:gap-5">
         {activityDetailContents.map((activityDetailContent) => (
           <ActivityDetail
             title={activityDetailContent.title}

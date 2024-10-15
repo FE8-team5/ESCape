@@ -15,7 +15,7 @@ export default function ActivityDetail({
   isCategory,
 }: ActivityDetailProps) {
   return (
-    <div className="flex flex-col justify-center items-center gap-[15px] px-[21px] py-5 bg-[#252530] rounded-lg border border-unactive ">
+    <div className="flex flex-col justify-center items-center gap-[15px] px-[21px] py-5 bg-[#252530] rounded-lg border border-unactive">
       <h4 className="text-center text-brand-gray-light text-sm font-medium leading-tight">
         {title}
       </h4>
