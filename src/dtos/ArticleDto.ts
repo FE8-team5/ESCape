@@ -1,19 +1,27 @@
 export interface BoardData {
+  page: number;
   totalCount: number;
-  list: Article[];
+  articleList: Article[];
 }
 
 export interface Article {
-  updatedAt: string,
-  createdAt: string,
-  likeCount: number,
+  id: number;
+  title: string;
   writer: {
-    nickname: string,
-    id: number,
+    id: number;
+    nickname: string;
   }
-  image: string,
-  title: string,
-  id: number,
+  likeCount: number;
+  image: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface ArticleFormData {
+  image: string;
+  content: string;
+  title: string;
+  userId: number;
 }
 
 export interface ArticleDetail extends Article {

@@ -1,33 +1,39 @@
 import { ChangeEvent, useRef, useState } from "react";
 import Image from "next/image";
-import PlusIcon from "../../../public/icons/plus_icon.svg"
+import PlusIcon from "../../../public/icons/plus_icon.svg";
 
-export default function ContentSection() {
-  const [text, setText] = useState<string>('');
-  const [image, setImage] = useState<string | null>(null);
+interface ContentSectionProps {
+  onFormDataChange: (value: { image: File | null; title: string; content: string }) => void;
+}
+
+export default function ContentSection({ onFormDataChange }: ContentSectionProps) {
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
-    setText(event.target.value);
-  };
-
-  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImage(reader.result as string);
-        if (fileInputRef.current) {
-          fileInputRef.current.value = "";
-        }
-      };
-      reader.readAsDataURL(file);
+      setImagePreview(URL.createObjectURL(file));
+      onFormDataChange({ title, content, image: file });
+      if (fileInputRef.current) {
+        fileInputRef.current.value = "";
+      }
     }
   };
 
-  const handleImageClick = () => {
-    fileInputRef.current?.click();
-  }
+  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const result = e.target.value;
+    setTitle(result);
+    onFormDataChange({ title: result, content, image: null });
+  };
+
+  const handleContentChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const result = e.target.value;
+    setContent(result);
+    onFormDataChange({ title, content: result, image: null });
+  };
 
   return (
     <div className="pt-6">
@@ -38,6 +44,8 @@ export default function ContentSection() {
         type="text"
         placeholder="제목을 입력해주세요."
         className="bg-brand-black-medium w-full rounded-xl border-[1px] border-solid border-brand-black-light py-4 px-6 text-brand-white mt-6"
+        value={title}
+        onChange={handleTitleChange}
       />
       <h2 className="flex gap-1.5 font-medium text-[16px] text-brand-white leading-[19px] mt-10">
         <span className="text-brand-indigo">*</span>내용
@@ -46,12 +54,12 @@ export default function ContentSection() {
         <textarea
           placeholder="내용을 입력해주세요."
           className="h-[240px] bg-brand-black-medium w-full rounded-xl border-[1px] border-solid border-brand-black-light py-4 px-6 text-brand-white mt-6"
-          value={text}
-          onChange={handleChange}
+          value={content}
+          onChange={handleContentChange}
           maxLength={299}
         />
         <p className="absolute bottom-4 right-4 text-brand-white">
-          {text.length} / 300
+          {content.length} / 300
         </p>
       </div>
       <h2 className="flex gap-1.5 font-medium text-[16px] text-brand-white leading-[19px] mt-10">
@@ -65,13 +73,23 @@ export default function ContentSection() {
           onChange={handleImageChange}
           className="hidden"
         />
-        <button onClick={handleImageClick} className="text-brand-gray-dark flex justify-center items-center flex-col gap-3 w-[240px] h-[240px] bg-brand-black-medium rounded-xl border-[1px] border-solid border-brand-black-light py-4 px-6 mt-6">
+        <button
+          onClick={() => fileInputRef.current?.click()}
+          type="button"
+          className="text-brand-gray-dark flex justify-center items-center flex-col gap-3 w-[240px] h-[240px] bg-brand-black-medium rounded-xl border-[1px] border-solid border-brand-black-light py-4 px-6 mt-6"
+        >
           <Image src={PlusIcon} alt="이미지 등록" />
           이미지 등록
         </button>
-        {image && (
+        {imagePreview && (
           <div className="absolute bottom-0">
-            <Image src={image} alt="등록한 이미지" onClick={handleImageClick} width={240} height={240} className="rounded-xl cursor-pointer" style={{ width: '240px', height: '240px' }} />
+            <Image
+              src={imagePreview}
+              alt="등록한 이미지"
+              width={240}
+              height={240}
+              className="rounded-xl cursor-pointer"
+            />
           </div>
         )}
       </div>

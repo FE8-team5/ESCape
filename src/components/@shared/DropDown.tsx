@@ -1,5 +1,13 @@
 import useToggle from "@/hooks/useToggle";
-import React, { useEffect, useRef, ReactNode, ReactElement } from "react";
+import React, {
+  useEffect,
+  useRef,
+  ReactNode,
+  ReactElement,
+  isValidElement,
+  Children,
+  cloneElement
+} from "react";
 
 interface Props {
   children: ReactNode;
@@ -8,18 +16,7 @@ interface Props {
   childType?: "menu" | "other";
 }
 
-/**
- * Dropdown 공통 컴포넌트
- * @param buttonChildren dropdown visible 값을 토글하는 버튼 디자인 컴포넌트
- * @param width dropdown box의 width 값
- * @param childType (optional) other: 우측정렬, menu: 가운데정렬 / default: menu
- */
-export default function Dropdown({
-  buttonChildren,
-  children,
-  width,
-  childType = "menu",
-}: Props) {
+export default function Dropdown({ buttonChildren, children, width, childType = "menu" }: Props) {
   const [isVisible, setIsVisible] = useToggle(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -28,10 +25,7 @@ export default function Dropdown({
       if (!isVisible) {
         return;
       }
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(e.target as Node)
-      ) {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setIsVisible();
       }
     }
@@ -40,14 +34,13 @@ export default function Dropdown({
     } else {
       window.removeEventListener("click", handleClickOutside);
     }
-
     return () => {
       window.removeEventListener("click", handleClickOutside);
     };
   }, [isVisible]);
 
   return (
-    <div className="relative" ref={dropdownRef}>
+    <div ref={dropdownRef}>
       <button
         className="flex w-full"
         type="button"
@@ -58,22 +51,24 @@ export default function Dropdown({
         {buttonChildren}
       </button>
       {isVisible && (
-        <button
-          className={`absolute right-0 top-[calc(100%+6px)] z-40 m-0 flex flex-col items-center justify-center rounded-2xl border border-solid border-brand-black-light bg-brand-black-medium px-1 py-1 ${width}`}
-          onClick={() => setIsVisible()}
-        >
-          {React.Children.map(children, (child) => {
-            if (React.isValidElement(child)) {
-              return React.cloneElement(child as ReactElement, {
-                className:
-                  childType === "menu"
-                    ? `flex w-full items-center justify-center rounded-xl py-2 text-[14px] font-normal text-brand-white hover:bg-brand-black-dark`
-                    : `flex w-full items-center rounded-xl px-4 py-2 text-[14px] font-normal text-brand-white`,
-              });
-            }
-            return child;
-          })}
-        </button>
+        <div className="relative">
+          <button
+            className={`absolute right-0 top-1.5 z-40 m-0 flex flex-col items-center justify-center rounded-2xl border border-solid border-brand-black-light bg-brand-black-medium px-1 py-1 ${width}`}
+            onClick={() => setIsVisible()}
+          >
+            {Children.map(children, (child) => {
+              if (isValidElement(child)) {
+                return cloneElement(child as ReactElement, {
+                  className:
+                    childType === "menu"
+                      ? `flex w-full items-center justify-center rounded-xl py-2 text-[14px] font-normal text-brand-white hover:bg-brand-black-dark`
+                      : `flex w-full items-center rounded-xl px-4 py-2 text-[14px] font-normal text-brand-white`,
+                });
+              }
+              return child;
+            })}
+          </button>
+        </div>
       )}
     </div>
   );

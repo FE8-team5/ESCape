@@ -12,13 +12,13 @@ export interface DetailCommentProps {
 export default function CommentCard({ data }: DetailCommentProps) {
 
   return (
-    <div className="w-full bg-brand-black-medium rounded-xl border-[1px] border-solid border-brand-black-light py-5 px-6">
+    <div className="bg-brand-black-medium rounded-xl border-[1px] border-solid border-brand-black-light py-5 px-6">
       <div className="flex justify-between">
-        <p className="max-w-[1000px] text-[16px] leading-[19px] font-normal text-brand-white w-full break-words">
-          {data?.content ? data.content : "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"}
+        <p className="text-[16px] leading-[19px] font-normal text-brand-white break-words line-clamp-[10]">
+          {data?.content ? data.content : "제목이 들어가는 영역입니다."}
         </p>
         <div>
-          <Dropdown width="w-[120px]" buttonChildren={<div><Image src={KebabIcon} alt="수정 & 삭제하기" width={24} height={24} /></div>}>
+          <Dropdown width="w-[120px]" buttonChildren={<div className="w-6 h-6 ml-4"><Image src={KebabIcon} alt="수정 & 삭제하기" width={24} height={24} /></div>}>
             <button>
               수정하기
             </button>
