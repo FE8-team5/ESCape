@@ -32,6 +32,7 @@ export default function Activity() {
       <div className="grid grid-cols-3 gap-[10px] xl:gap-5">
         {activityDetailContents.map((activityDetailContent) => (
           <ActivityDetail
+            key={activityDetailContent.title}
             title={activityDetailContent.title}
             icon={activityDetailContent.icon}
             value={activityDetailContent.value}

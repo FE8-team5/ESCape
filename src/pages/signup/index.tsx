@@ -7,9 +7,10 @@ import Image from 'next/image'
 import Logo from '../../../public/images/logo.svg'
 import EyesShowIcon from '../../../public/icons/icon_eyes_show.svg'
 import EyesHiddenIcon from '../../../public/icons/icon_eyes_hidden.svg'
-import PrimaryButton from '@/components/@shared/button/PrimaryButton'
+import Button from '@/components/@shared/button/CustomButton'
 import { useForm } from 'react-hook-form'
 import { Spinner } from 'flowbite-react'
+import CustomButton from '@/components/@shared/button/CustomButton'
 
 export default function SignupPage() {
   const {
@@ -158,9 +159,9 @@ export default function SignupPage() {
           )}
         </div>
         <div className="pt-2">
-          <PrimaryButton type="submit" onClick={() => {}} active={true} disabled={!isValid}>
+          <CustomButton type="submit" onClick={() => {}} active={isValid}>
             {loading ? <Spinner aria-label="로딩 중..." size="md" /> : '가입하기'}
-          </PrimaryButton>
+          </CustomButton>
         </div>
       </form>
 

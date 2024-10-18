@@ -8,7 +8,7 @@ import KakaoIcon from '../../../public/icons/icon_kakao.svg'
 import GoogleIcon from '../../../public/icons/icon_google.svg'
 import EyesShowIcon from '../../../public/icons/icon_eyes_show.svg'
 import EyesHiddenIcon from '../../../public/icons/icon_eyes_hidden.svg'
-import PrimaryButton from '@/components/@shared/button/PrimaryButton'
+import CustomButton from '@/components/@shared/button/CustomButton'
 import { Spinner } from 'flowbite-react'
 import { useForm } from 'react-hook-form'
 
@@ -99,9 +99,9 @@ export default function SignInPage() {
           {errors.password && <p className="mt-1 text-red-500">{errors.password.message}</p>}
         </div>
         <div className="pt-2">
-          <PrimaryButton type="submit" onClick={() => {}} active={true}>
+          <CustomButton type="submit" onClick={() => {}} active={true}>
             {loading ? <Spinner aria-label="로딩 중..." size="md" /> : '로그인'}
-          </PrimaryButton>
+          </CustomButton>
         </div>
       </form>
       <div className="mt-10 text-center">

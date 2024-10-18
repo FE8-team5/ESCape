@@ -1,8 +1,7 @@
 import Image from 'next/image'
 import React from 'react'
 import profileImage from '../../../public/images/profile_image.png'
-import PrimaryButton from '../@shared/button/PrimaryButton'
-import TertiaryButton from '../@shared/button/TertiaryButton'
+import CustomButton from '../@shared/button/CustomButton'
 
 export default function Profile() {
   // TertiaryButton을 위한 임시 onClick 함수
@@ -30,10 +29,10 @@ export default function Profile() {
       </div>
 
       <div className="flex w-full flex-col gap-[10px]">
-        <PrimaryButton active={true}>프로필 편집</PrimaryButton>
-        <TertiaryButton active={true} onClick={temp}>
+        <CustomButton active={true}>프로필 편집</CustomButton>
+        <CustomButton style="tertiary" active={true} onClick={temp}>
           로그아웃
-        </TertiaryButton>
+        </CustomButton>
       </div>
     </div>
   )
