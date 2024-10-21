@@ -3,9 +3,9 @@ import Image from "next/image";
 import PlusIcon from "@icons/plus_icon.svg";
 
 interface ContentSectionProps {
-  title: string;
-  content: string;
-  onFormDataChange: (value: { image: File | null; title: string; content: string }) => void;
+  title: string | undefined;
+  content: string | undefined;
+  onFormDataChange: (value: { image: File | null; title: string | undefined; content: string | undefined }) => void;
 }
 
 export default function ContentSection({ title, content, onFormDataChange }: ContentSectionProps) {
@@ -57,7 +57,7 @@ export default function ContentSection({ title, content, onFormDataChange }: Con
           maxLength={300}
         />
         <p className="absolute bottom-4 right-4 text-brand-white">
-          {content.length} / 300
+          {content?.length} / 300
         </p>
       </div>
       <h2 className="flex gap-1.5 font-medium text-[16px] text-brand-white leading-[19px] mt-10">
@@ -80,13 +80,13 @@ export default function ContentSection({ title, content, onFormDataChange }: Con
           이미지 등록
         </button>
         {imagePreview && (
-          <div className="absolute bottom-0">
+          <div className="absolute bottom-0 w-[240px] h-[240px]">
             <Image
               src={imagePreview}
               alt="등록한 이미지"
-              width={240}
-              height={240}
+              fill
               className="rounded-xl cursor-pointer"
+              onClick={() => fileInputRef.current?.click()}
             />
           </div>
         )}

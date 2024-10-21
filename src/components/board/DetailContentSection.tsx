@@ -1,16 +1,34 @@
 import {ArticleDetail} from "@/dtos/ArticleDto";
-import Dropdown from "@/components/@shared/DropDown";
+import Dropdown from "@/components/board/DropDown";
 import Image from "next/image";
 import KebabIcon from "@icons/kebab_icon.svg";
 import CommentIcon from "@icons/comment_icon.svg"
 import HeartIcon from "@icons/heart_icon.svg"
 import timeAgo from "@/utils/timeAgo";
+import BoardPatchModal from "@/components/board/BoardPatchModal";
+import BoardDeleteModal from "@/components/board/BoardDeleteModal";
+import {useState} from "react";
 
 export interface DetailContentProps {
   data?: ArticleDetail;
 }
 
 export default function DetailContentSection({ data }: DetailContentProps) {
+  const [isPatchOpen, setIsPatchOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const togglePatchModal = () => setIsPatchOpen((prevState) => !prevState);
+  const toggleDeleteModal = () => setIsDeleteOpen((prevState) => !prevState);
+
+  // 상세페이지 게시물 수정하기를 클릭할 시 수정 모달을 열어주는 이벤트 핸들러
+  const handlePatchModal = () => {
+    setIsPatchOpen(!isPatchOpen);
+  }
+
+  // 상세페이지 게시물 삭제하기를 클릭할 시 삭제 모달을 열어주는 이벤트 핸들러
+  const handleDeleteModal = () => {
+    setIsDeleteOpen(!isDeleteOpen);
+  }
+
   return (
     <>
       <div className="flex justify-between items-center pb-6 border-b-[1px] border-solid border-brand-black-light">
@@ -18,10 +36,10 @@ export default function DetailContentSection({ data }: DetailContentProps) {
           {data?.title ? data.title : "제목이 들어가는 영역입니다."}
         </h1>
         <Dropdown width="w-[120px]" buttonChildren={<div className="w-6 h-6 ml-4"><Image src={KebabIcon} alt="수정 & 삭제하기" width={24} height={24}/></div>}>
-          <button>
+          <button onClick={handlePatchModal}>
             수정하기
           </button>
-          <button>
+          <button onClick={handleDeleteModal}>
             삭제하기
           </button>
         </Dropdown>
@@ -52,6 +70,8 @@ export default function DetailContentSection({ data }: DetailContentProps) {
           {data?.content ? data.content : "본문이 들어가는 영역입니다."}
         </p>
       </div>
+      <BoardPatchModal id={data?.id} isOpen={isPatchOpen} onClick={togglePatchModal}  value="게시글 수정"/>
+      <BoardDeleteModal id={data?.id} isOpen={isDeleteOpen} onClick={toggleDeleteModal} />
     </>
   )
 }

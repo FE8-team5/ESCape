@@ -9,12 +9,14 @@ interface searchSectionProps {
 export default function SearchSection({ onSearchChange }: searchSectionProps) {
   const [searchValue, setSearchValue] = useState("");
 
+  // 검색을 할 때, 엔터키를 눌러야지만 데이터를 가져오는 이벤트 핸들러
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       onSearchChange(searchValue);
     }
   };
 
+  // 변경되는 검색값을 컨트롤 해주는 이벤트 핸들러
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   }

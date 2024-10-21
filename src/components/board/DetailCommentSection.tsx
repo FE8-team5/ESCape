@@ -3,15 +3,17 @@ import CommentCard from "@/components/board/CommentCard";
 
 export interface DetailCommentProps {
   data?: ArticleComment[];
+  currentPage: number;
+  dataId: string | string[] | undefined;
 }
 
-export default function DetailCommentSection({ data }: DetailCommentProps) {
+export default function DetailCommentSection({ data, currentPage, dataId }: DetailCommentProps) {
   return (
     <div className="my-10">
       <div className="flex flex-col gap-4">
         {data && data.length > 0 ? (
           data?.map((data) =>(
-            <CommentCard key={data.id} data={data} />
+            <CommentCard key={data.id} data={data} currentPage={currentPage} dataId={dataId} />
           ))
         ) : (
           // 임시 예외 처리

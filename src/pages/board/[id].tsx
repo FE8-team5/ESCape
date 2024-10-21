@@ -48,8 +48,12 @@ export default function BoardDetailPage() {
   // 댓글 전송을 위한 useMutation
   const commentPostMutation = useMutation({
     mutationFn: (newComment: postCommentsProps) => postComments(newComment),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['articleDetailComments', id] });
+    onSuccess: async () => {
+      try {
+        await queryClient.invalidateQueries({ queryKey: ['articleDetailComments', id, currentPage] });
+      } catch (e) {
+        console.error(e);
+      }
     }
   })
 
@@ -69,9 +73,9 @@ export default function BoardDetailPage() {
     <div className="relative mx-4 md:mx-6 xl:mx-auto xl:w-[1200px] py-[100px]">
       <DetailContentSection data={articleDetailData} />
       <form onSubmit={handleCommentSubmit}>
-        <DetailPostCommentSection comment={comment} setComment={setComment} />
+        <DetailPostCommentSection comment={comment} setComment={setComment} value="댓글 쓰기" />
       </form>
-      <DetailCommentSection data={articleDetailCommentsData?.articleComments} />
+      <DetailCommentSection data={articleDetailCommentsData?.articleComments} dataId={id} currentPage={currentPage} />
       <PaginationSection totalPageCount={articleDetailCommentsData?.totalCount} currentPage={currentPage} onPageClick={handlePageClick} />
     </div>
   );

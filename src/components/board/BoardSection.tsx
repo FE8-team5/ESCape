@@ -1,4 +1,4 @@
-import Dropdown from "@/components/@shared/DropDown";
+import Dropdown from "@/components/board/DropDown";
 import Image from "next/image";
 import ToggleIcon from "@icons/toggle_icon.svg"
 import {useState} from "react";
@@ -14,6 +14,7 @@ interface BoardSectionProps {
 export default function BoardSection({ data, selectedOption, setSelectedOption }: BoardSectionProps) {
   const [localSelectedOption, setLocalSelectedOptions] = useState(selectedOption);
 
+  // 드롭다운의 최신순, 인기순을 눌렀을 때 실제로 보이는 값을 수정하기 위한 이벤트 핸들러
   const handleOptionChange = (option: string) => {
     setLocalSelectedOptions(option);
     setSelectedOption(option);

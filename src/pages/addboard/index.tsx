@@ -7,17 +7,17 @@ import {useRouter} from "next/router";
 
 export default function AddBoardsPage() {
   const [image, setImage] = useState<File | null>(null);
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
+  const [title, setTitle] = useState<string | undefined>("");
+  const [content, setContent] = useState<string | undefined>("");
   const [userId, setUserId] = useState(1);
   const router = useRouter();
   const queryClient = useQueryClient();
 
   // ContentSection 컴포넌트에서 받아온 value 값들을 적용하기 위한 이벤트 핸들러
-  const handleFormDataChange = (value: {image: File | null; title: string; content: string}) => {
+  const handleFormDataChange = (value: {image: File | null; title: string | undefined; content: string | undefined}) => {
     setImage(value.image);
-    setTitle(value.title);
-    setContent(value.content);
+    setTitle(value?.title);
+    setContent(value?.content);
   }
 
   // 게시글 전송을 위한 useMutation
@@ -43,8 +43,8 @@ export default function AddBoardsPage() {
 
     const formData = new FormData();
     formData.append("image", image as File);
-    formData.append("title", title);
-    formData.append("content", content);
+    formData.append("title", title as string);
+    formData.append("content", content as string);
     formData.append("userId", String(userId));
 
     uploadPostMutation.mutate(formData);
@@ -57,7 +57,9 @@ export default function AddBoardsPage() {
   return (
     <div className="relative mx-4 md:6 xl:mx-auto xl:w-[1200px] py-[100px]">
       <form onSubmit={handleSubmit}>
-        <HeaderSection />
+        <HeaderSection>
+          게시글 쓰기
+        </HeaderSection>
         <ContentSection title={title} content={content} onFormDataChange={handleFormDataChange} />
       </form>
     </div>
