@@ -2,8 +2,7 @@ import { removeTokens } from '@/utils/authTokenStorage'
 import axios, { AxiosError } from 'axios'
 
 const axiosInstance = axios.create({
-  // baseURL: process.env.NEXT_PUBLIC_API_URL,
-  baseURL: 'https://mogazoa-api.vercel.app/4-5/',
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
 })
 
 axiosInstance.interceptors.request.use((config) => {
