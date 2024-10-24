@@ -23,7 +23,7 @@ export default function SignInPage() {
   const [loading, setLoading] = useState(false)
   const [loginErrorMessage, setLoginErrorMessage] = useState('')
   const router = useRouter()
-  const { login, user } = useAuth() // user 상태 추가
+  const { login, user } = useAuth()
   const [showPassword, setShowPassword] = useState(false)
 
   useEffect(() => {
@@ -34,9 +34,9 @@ export default function SignInPage() {
 
   const onSubmit = async (data: { email: string; password: string }) => {
     setLoading(true)
-    const isLoginSuccess = await login(data)
-    if (!isLoginSuccess) {
-      setLoginErrorMessage('이메일 혹은 비밀번호를 확인해주세요.')
+    const { success, message } = await login(data)
+    if (!success) {
+      setLoginErrorMessage(message)
       setLoading(false)
     } else {
       router.push('/')
@@ -56,7 +56,7 @@ export default function SignInPage() {
           <input
             type="text"
             className={`bg-brand-black-medium w-full rounded-xl border-solid border-brand-black-light py-4 px-6 text-brand-gray-dark focus:outline-blue-gradation ${
-              errors.email ? 'border-red-500' : ''
+              errors.email || loginErrorMessage ? 'border-red-500' : ''
             }`}
             placeholder="이메일을 입력해주세요"
             {...register('email', {
@@ -68,6 +68,7 @@ export default function SignInPage() {
             })}
           />
           {errors.email && <p className="text-red-500 mt-1">{errors.email.message}</p>}
+          {loginErrorMessage && <p className="text-red-500 mt-1">{loginErrorMessage}</p>}
         </div>
         <div className="mb-5">
           <label className="block pb-1">비밀번호</label>
@@ -75,7 +76,7 @@ export default function SignInPage() {
             <input
               type={showPassword ? 'text' : 'password'}
               className={`bg-brand-black-medium w-full rounded-xl border-solid border-brand-black-light py-4 px-6 text-brand-gray-dark focus:outline-blue-gradation ${
-                errors.password ? 'border-red-500' : ''
+                errors.password || loginErrorMessage ? 'border-red-500' : ''
               }`}
               placeholder="비밀번호를 입력해주세요"
               {...register('password', {

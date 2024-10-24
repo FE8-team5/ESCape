@@ -3,6 +3,7 @@ import Image from 'next/image'
 import GoogleIcon from '../../../public/icons/icon_google.svg'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
+import { useToaster } from "@/contexts/ToasterProvider";
 
 const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID
 const GOOGLE_CLIENT_SECRET = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET
@@ -12,6 +13,7 @@ export default function GoogleOauthButton() {
   const { oAuthLogin } = useAuth()
   const router = useRouter()
   const [code, setCode] = useState('')
+  const toaster = useToaster();
 
   // 팝업 열기
   const handleGoogleClick = () => {
@@ -30,8 +32,8 @@ export default function GoogleOauthButton() {
       `left=${left},top=${top},width=${width},height=${height}`,
     )
 
-    if (!googleWindow) {
-      alert('팝업을 열 수 없습니다. 팝업 차단이 설정되어 있는지 확인해 주세요.')
+    if (!googleWindow) { 
+      toaster("fail", "팝업을 열 수 없습니다. 팝업 차단이 설정되어 있는지 확인해 주세요.")
       return
     }
 
@@ -81,7 +83,7 @@ export default function GoogleOauthButton() {
       try {
         const isSignInSuccess = await oAuthLogin({ redirectUri: REDIRECT_URI, token: tokenData.id_token }, 'google')
         if (isSignInSuccess?.accessToken) {
-          alert('로그인 성공')
+          toaster("success", "로그인이 성공하였습니다.")
           localStorage.removeItem('authCode')
           router.push('/')
         } else {
@@ -89,12 +91,12 @@ export default function GoogleOauthButton() {
         }
       } catch (error) {
         console.error('로그인 실패:', error)
-        alert('로그인에 실패했습니다. 다시 시도해 주세요.')
+        toaster("fail", "로그인에 실패했습니다. 다시 시도해 주세요.")
         router.push('/oauth/google')
       }
     } else {
       console.error('ID 토큰을 가져오는 데 실패했습니다:', tokenData)
-      alert('ID 토큰을 가져오지 못했습니다.')
+      toaster("fail", "ID 토큰을 가져오지 못했습니다.")
     }
   }
 

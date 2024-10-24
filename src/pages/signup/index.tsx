@@ -10,6 +10,8 @@ import EyesHiddenIcon from '../../../public/icons/icon_eyes_hidden.svg'
 import PrimaryButton from '@/components/@shared/button/CustomButton'
 import { useForm } from 'react-hook-form'
 import { Spinner } from 'flowbite-react'
+import { useToaster } from "@/contexts/ToasterProvider";
+
 
 export default function SignupPage() {
   const {
@@ -23,6 +25,7 @@ export default function SignupPage() {
   const [loading, setLoading] = useState(false)
   const router = useRouter()
   const { user, login, isPending } = useAuth()
+  const toaster = useToaster();
 
   useEffect(() => {
     if (!isPending && user) {
@@ -41,7 +44,8 @@ export default function SignupPage() {
       return
     }
     setLoading(false)
-    alert('회원가입 실패')
+    toaster("fail", "회원가입에 실패하였습니다.")
+
   }
   const validatePassword = (value) => {
     const regex = /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$%^&*]).{8,}$/ // 숫자, 영문, 특수문자 포함 및 최소 8자

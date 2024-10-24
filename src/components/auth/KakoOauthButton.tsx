@@ -3,9 +3,11 @@ import Image from 'next/image'
 import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import KakaoIcon from '../../../public/icons/icon_kakao.svg'
+import { useToaster } from "@/contexts/ToasterProvider";
 
 export default function KakaoOauthButton() {
   const { oAuthLogin } = useAuth()
+  const toaster = useToaster();
   const router = useRouter()
 
   const KAKAO_REST_API_KEY = process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY
@@ -24,8 +26,8 @@ export default function KakaoOauthButton() {
       `left=${left},top=${top},width=${width},height=${height}`,
     )
 
-    if (!kakaoWindow) {
-      alert('팝업을 열 수 없습니다. 팝업 차단이 설정되어 있는지 확인해 주세요.')
+    if (!kakaoWindow) { 
+      toaster("warn", "팝업을 열 수 없습니다. 팝업 차단이 설정되어 있는지 확인해 주세요.")
       return
     }
   }
