@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { ReactNode } from 'react'
 import { AuthProvider } from '@/contexts/AuthProvider'
+import ToasterProvider from "@/contexts/ToasterProvider";
 import Header from '@/components/@shared/layout/Header'
 
 interface ProvidersProps {
@@ -22,12 +23,14 @@ const queryClient = new QueryClient({
 function Providers({ children }: ProvidersProps) {
   return (
     <QueryClientProvider client={queryClient}>
+      <ToasterProvider>
       <AuthProvider>
         <Header>
           {children}
           {process.env.NODE_ENV !== 'production' && <ReactQueryDevtools initialIsOpen={false} />}
         </Header>
-      </AuthProvider>
+        </AuthProvider>
+       </ToasterProvider>
     </QueryClientProvider>
   )
 }

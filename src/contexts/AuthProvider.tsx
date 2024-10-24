@@ -5,6 +5,7 @@ import { CommonUserTypes } from '@/dtos/UserDto'
 import { removeTokens } from '@/utils/authTokenStorage'
 import { useRouter } from 'next/router'
 import getUser from '@/libs/axios/user/getUser'
+import { useToaster } from "@/contexts/ToasterProvider";
 import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from 'react'
 
 interface AuthValues {
@@ -35,6 +36,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     user: null,
     isPending: true,
   })
+  const toaster = useToaster();
+  const router = useRouter();
 
   const handleAuthChange = (key: string, value: UserValue | boolean) => {
     setAuthState((prev) => ({
@@ -59,8 +62,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = async (formData: SignInForm) => {
     const isSignInSuccess = await signIn(formData)
-    if (!isSignInSuccess) {
-      alert('로그인에 실패했습니다. 이메일과 비밀번호를 확인해주세요.')
+    toaster("success", "로그인에 성공하였습니다.");
+    if (!isSignInSuccess) { 
+      toaster("success", "로그인에 실패했습니다. 이메일과 비밀번호를 확인해주세요.")
       return false
     }
     await getMe()
@@ -77,7 +81,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const logout = () => {
     handleAuthChange('user', null)
     removeTokens()
-    alert('로그아웃이 되었습니다.')
+    toaster("success", "로그아웃이 되었습니다.")
   }
 
   useEffect(() => {
@@ -105,15 +109,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
 export function useAuth(required?: boolean) {
   const context = useContext(AuthContext)
+  const toaster = useToaster();
+  const router = useRouter();
+
   if (!context) throw new Error('useAuth는 반드시 AuthProvider 노드 안에서 사용돼야 합니다.')
 
-  const router = useRouter()
   useEffect(() => {
     if (required && !context.user && !context.isPending) {
-      alert('로그인이 필요한 페이지입니다.')
+      toaster("warn", "로그인이 필요한 페이지입니다.");
       router.push('/signin')
     }
-  }, [required, context.user, context.isPending])
+  }, [required, context.user, context.isPending, router, toaster])
 
   return context
 }
