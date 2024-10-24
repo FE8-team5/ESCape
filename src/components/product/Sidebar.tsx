@@ -1,24 +1,35 @@
-import { getCategories } from '@/libs/axios/product/category'
-import { useQuery } from '@tanstack/react-query'
+import { useCategory } from '@/contexts/CategoryProvider'
+import { useProductQueries } from '@/contexts/ProductProvider'
+import classNames from 'classnames'
 
 interface SidebarProps {}
 
 export default function Sidebar({}: SidebarProps) {
-  const { data: categoryData } = useQuery({
-    queryKey: ['category'],
-    queryFn: getCategories,
-  })
-
+  const { categories } = useCategory()
+  const { productQueries, handleCategory } = useProductQueries()
   return (
-    <div className="hidden flex-col gap-[35px] pl-[30px] pt-[45px] md:flex md:w-[180px] xl:w-[220px]">
-      <span>카테고리</span>
-      {categoryData &&
-        !!categoryData.length &&
-        categoryData.map((menu) => (
-          <span key={menu.id} className="text-brand-gray-dark">
-            {menu.name}
-          </span>
-        ))}
+    <div className="hidden w-full items-start justify-center px-5 pt-[45px] md:flex md:w-[180px] xl:w-[220px]">
+      <div className="flex grow flex-col">
+        <span className="pb-5 pl-5">카테고리</span>
+        {!!categories.length &&
+          categories.map(
+            (menu) =>
+              menu.name && (
+                <button
+                  onClick={() => {
+                    handleCategory(menu.id)
+                  }}
+                  key={menu.id}
+                  className={classNames(
+                    'flex h-[45px] w-full items-center rounded-lg pl-5 xl:h-[50px]',
+                    productQueries.categoryId === menu.id ? 'bg-unactive' : 'text-brand-gray-dark',
+                  )}
+                >
+                  {menu.name}
+                </button>
+              ),
+          )}
+      </div>
     </div>
   )
 }

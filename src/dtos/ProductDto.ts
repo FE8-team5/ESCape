@@ -11,7 +11,7 @@ export interface ProductTypes {
   id: number
 }
 
-export interface ProductListTypes {
+export interface ResponseProductListTypes {
   nextCursor: number
   list: ProductTypes[]
 }

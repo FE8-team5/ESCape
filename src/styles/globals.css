@@ -117,3 +117,25 @@ select:focus {
   outline: 1px solid transparent;
   outline-offset: 1px;
 }
+
+@layer utilities {
+  .h-100vh-xl {
+    height: calc(100vh - 100px);
+  }
+  .h-100vh-md {
+    height: calc(100vh - 100px);
+  }
+  .w-100vw-sm {
+    width: calc(100vw - 40px);
+  }
+
+  .scroll-hidden {
+    overflow: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}
