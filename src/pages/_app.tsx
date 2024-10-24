@@ -4,7 +4,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { ReactNode } from 'react'
 import { AuthProvider } from '@/contexts/AuthProvider'
-import Header from '@/components/@shared/layout/Header'
+import Layout from '@/components/@shared/layout/Layout'
+import { CategoryProvider } from '@/contexts/CategoryProvider'
 
 interface ProvidersProps {
   children: ReactNode
@@ -23,10 +24,10 @@ function Providers({ children }: ProvidersProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
-        <Header>
+        <CategoryProvider>
           {children}
           {process.env.NODE_ENV !== 'production' && <ReactQueryDevtools initialIsOpen={false} />}
-        </Header>
+        </CategoryProvider>
       </AuthProvider>
     </QueryClientProvider>
   )
@@ -35,7 +36,9 @@ function Providers({ children }: ProvidersProps) {
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <Providers>
-      <Component {...pageProps} />
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
     </Providers>
   )
 }

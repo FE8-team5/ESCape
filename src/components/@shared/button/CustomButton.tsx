@@ -1,6 +1,6 @@
-import { match } from 'ts-pattern'
 import classNames from 'classnames'
 import { PropsWithChildren } from 'react'
+import { match } from 'ts-pattern'
 
 interface CustomButtonProps {
   active: boolean
@@ -11,8 +11,7 @@ interface CustomButtonProps {
 }
 
 /**active에 boolean값을 넣어주세요
-기본 style은 "primary"
-secondary 스타일을 사용할 때 버튼 색상이 body의 색상과 다르면 tailwind속성을 넣어주세요
+ *기본 style은 "primary"
  */
 export default function CustomButton({
   children,

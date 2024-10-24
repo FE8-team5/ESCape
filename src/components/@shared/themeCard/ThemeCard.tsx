@@ -4,12 +4,14 @@ import starIcon from '../../../../public/icons/star_icon.svg'
 import commentIcon from '../../../../public/icons/comment_icon.svg'
 import heartIcon from '../../../../public/icons/heart_icon.svg'
 import { ProductTypes } from '@/dtos/ProductDto'
+import Link from 'next/link'
 
 interface ThemeCardProps {
+  productId: number
   data: ProductTypes
 }
 
-export default function ThemeCard({ data }: ThemeCardProps) {
+export default function ThemeCard({ data, productId }: ThemeCardProps) {
   const { image, name, rating, reviewCount, favoriteCount } = data
   const cardDetailContents = [
     {
@@ -30,8 +32,8 @@ export default function ThemeCard({ data }: ThemeCardProps) {
   ]
 
   return (
-    <button>
-      <div className="flex max-w-[300px] flex-col items-start justify-start gap-[10px] rounded-lg border border-unactive bg-[#252530] p-[10px] md:p-[20px]">
+    <Link href={`product/${productId}`} className="h-full w-full">
+      <div className="flex h-full w-full flex-col items-start justify-start gap-[10px] rounded-lg border border-unactive bg-[#252530] p-[10px] md:p-[20px] xl:max-w-[300px]">
         <Image className="m-auto" src={image} alt={`${name} 이미지`} width={140} height={98} />
         <div className="flex flex-col items-start justify-start gap-[5px]">
           <h4 className="text-sm font-medium text-brand-white">{name}</h4>
@@ -45,6 +47,6 @@ export default function ThemeCard({ data }: ThemeCardProps) {
           </div>
         </div>
       </div>
-    </button>
+    </Link>
   )
 }
